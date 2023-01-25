@@ -1,0 +1,89 @@
+*{
+    font-size: 10px;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+textarea:focus, input:focus{
+    outline: none;
+}
+
+.groupname{
+    font-weight: bold;
+}
+
+.progress{
+    width: 100%;
+    position: absolute;
+    z-index: 1;
+    height: 100%!important;
+    background-color: white!important;
+}
+
+.progress-bar{
+    height: inherit;
+    background-color: #bebebe!important;
+    color: black!important;
+}
+
+.btn{
+    padding: 2px 4px !important;
+}
+
+/*---------------------End of Customization-------------------------------*/
+.icon{
+    width: 18px;
+    height: 18px;
+    z-index: 2;
+}
+
+.name{
+    z-index: 2;
+    font-size: 10px;
+}
+
+.namewrap{
+    width: 100%;
+    border-radius: 0.25rem;
+    position: relative;
+    border:1px solid white;
+
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.namewrap:hover, .btn-detail:hover{
+    border: orange 1px solid !important;
+    cursor: pointer;
+}
+
+body{
+    background-color: #bebebe!important;
+}
+
+.item, .btns{
+    display: flex;
+    align-items: center;
+}
+
+.col-1_5{
+    width: 14.2857142%;
+}
+
+.column-block .group{
+    width: 100%;
+}
+
+.count{
+    width:2.5em;
+    height: 23px;
+    text-align:center;
+}
+
+.bg-green{
+    background-color: #6ddb6d!important;
+}
