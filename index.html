@@ -675,12 +675,11 @@
 
             let div = $("<div class='d-flex justify-content-around py-2'></div>")
 
-            unit.referenceRecipe.forEach((el) => {
+            unit.referenceRecipe.forEach((el, i) => {
                 let wrap = $("<div class='d-flex flex-column align-items-center p-3'></div>");
 
                 let img = $('<img src="' + el.img + '" alt="" attr="' + idTypeMapping[el.idType] + "_" + el.name + "_" + el.id + '" class="large-icon">')
-                let name = $("<div style='font-size:10px;' class='text-center'>" + el.name + "-" + idTypeMapping[el.idType] + "</div>")
-
+                let name = $("<div style='font-size:10px;' class='text-center'>" + el.name + "-" + idTypeMapping[el.idType] + " x " + unit.recipe[i].amount + "</div>")
                 img.on('error', function (e) {
                     this.src = el.img.replace("jpg", "png")
                 });
