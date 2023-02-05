@@ -27,6 +27,44 @@
             <div class="row" id="main"></div>
         </div>
     </div>
+    <div id="init" class="modal" tabindex="-1" role="dialog" aria-labelledby="my-modal-title" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="my-modal-title">Name - Type</h5>
+                    <button class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="info" id="recipe">
+                        <div>Recipe</div>
+                        <hr>
+                        <div class="display-info"></div>
+                        <hr>
+                    </div>
+                    <div class="info" id="simplest_material">
+                        <div>Simplest Material</div>
+                        <hr>
+                        <div class="display-info"></div>
+                        <hr>
+                    </div>
+                    <div class="info" id="insufficient_material">
+                        <div>insufficient Material</div>
+                        <hr>
+                        <div class="display-info"></div>
+                        <hr>
+                    </div>
+                    <div class="info" id="top_combination">
+                        <div>Top Combination</div>
+                        <hr>
+                        <div class="display-info"></div>
+                        <hr>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <script src="watch.js" type="text/javascript"></script>
 <script src="./data.js"></script>
@@ -36,21 +74,29 @@
 
         function creatBlock(name, item, isFusionable = true) {
             var main = $("#main");
-
             var group = $("<div class='group col-1_5 p-2 shadow-lg'></div>");
             var groupname = $("<div class='p-1 bg-white groupname text-center border rounded-top'>" + name + "</div>");
-            var itemlist = $("<div class='p-1 bg-white itemlist border rounded-bottom'></div>");
+
+            let sort_alphabet = $('<img src="./img/sortByAlphabet.png" alt="" class="sort sort-alphabet" attr="' + name.toLowerCase() + '">')
+            let sort_percentage = $('<img src="./img/sortByPercentage3.png" alt="" class="sort sort-percentage" attr="' + name.toLowerCase() + '">')
+            let sort_btn = $("<div class='d-flex sort-btn'></div>");
+            $(sort_btn).append(sort_percentage, sort_alphabet)
+
+            if (name != "Common") groupname.append(sort_btn)
+
+            var itemlist = $("<div class='p-1 bg-white itemlist border rounded-bottom " + name.toLowerCase() + "'></div>");
 
             $.each(item, function (index, value, type = name) {
                 let u_name = value.name.toLowerCase().replace(/\ /g, "")
                 u_name = u_name.replace(/\./g, "");
 
                 let id = type.toLowerCase() + "_" + u_name + "_" + value.id;
-                let item = $("<div class='item justify-content-between'></div>");
+                let item = $("<div class='item justify-content-between' attr=" + id + "></div>");
 
-                let img = $('<img src="' + value.img + ".png" + '" alt="" class="icon m-1" ">')
+                let img = $('<img src="' + value.img + '" alt="" class="icon m-1" ">')
+
                 img.on('error', function (e) {
-                    this.src = value.img + ".jpg"
+                    this.src = value.img.replace("jpg", "png")
                 });
 
                 let progress = $("<div class='progress'></div>");
@@ -60,19 +106,23 @@
 
                 let name = $("<div class='name ml-1'>" + value.name + "</div>");
                 let namewrap = $("<div class='namewrap d-flex align-items-center'></div>");
-                namewrap.append(img, progress, name);
+
+                let div = $("<div class='d-flex overflow-hidden align-items-center'></div>")
+                div.append(img, name)
+                namewrap.append(div, progress);
 
                 let btn = $("<div class='btns ml-1'></div>");
 
                 let btn_count = $("<input type='number' name='count' class='mr-1 p-0 border count' value='0' id='" + id + "' >");
                 let btn_minus = $("<div class='btn btn-danger btn-minus mr-1'>-</div>");
-                let btn_detail = $('<img src="./img/detail.png" class="icon ml-1 btn-detail" alt="" id="">');
+                let btn_detail = $('<img src="./img/detail.png" class="icon ml-1 btn-detail" alt="" attr="' + id + '">');
 
                 if (isFusionable) var btn_combine = $("<div class='btn btn-primary btn-combine mr-1'>Fuse</div>");
                 else var btn_combine = "";
 
                 // btn.append(btn_count, btn_minus, btn_combine, btn_detail);
-                btn.append(btn_count, btn_combine, btn_detail);
+                // btn.append(btn_count, btn_combine, btn_detail);
+                btn.append(btn_count, btn_detail);
 
                 item.append(namewrap, btn);
                 itemlist.append(item);
@@ -83,6 +133,23 @@
             return group;
             // main.append(group)
         }
+
+
+        $(document).on('hidden.bs.modal', '.modal', function () {
+            $(this).remove()
+        })
+
+
+        $(document).on('hidden.bs.modal shown.bs.modal', '.modal', function () {
+            let background = $(".modal-backdrop");
+
+            for (var i = 0; i < background.length; i++) {
+                if (i == background.length - 1) $(background[i]).css("background-color", "#212529")
+                else $(background[i]).css("background-color", "transparent")
+            }
+        })
+
+
 
         function createColumnBlock(arr) {
             var columnBlock = $("<div class='column-block d-flex flex-column'></div>")
@@ -99,6 +166,15 @@
             // $(input).attr("value", ++count);
             $(input).val(++count)
             $(input).trigger("change");
+        });
+
+        $(document).on("click", ".sort", function () {
+            if ($(this).hasClass("sort-alphabet")) {
+                sortByAlphabet($(this).attr("attr"))
+            }
+            else if ($(this).hasClass("sort-percentage")) {
+                sortByPercentage($(this).attr("attr"))
+            }
         });
 
         // $(document).on("click", ".btn-minus", function () {
@@ -119,7 +195,6 @@
             data[id[0]].forEach(el => {
                 if (el.id == id[2]) el.unit = parseInt($(this).val()) /* change unit count in data */
             });
-
         })
 
         function checkDupObjectIdInArr(arr) {
@@ -134,20 +209,93 @@
 
         function findId(id) {
             let temp;
-            for (var i in data) {
-                data[i].forEach(function (el) {
-                    if (el.id == id) {
-                        temp = el;
-                        return
-                    }
-                })
+            let name;
+            let obj = {
+                common: {
+                    start: 1,
+                    end: 9
+                },
+                uncommon: {
+                    start: 10,
+                    end: 22
+                },
+                special: {
+                    start: 23,
+                    end: 55
+                },
+                rare: {
+                    start: 56,
+                    end: 97
+                },
+                legend: {
+                    start: 98,
+                    end: 134
+                },
+                etc: {
+                    start: 135,
+                    end: 139
+                },
+                hidden: {
+                    start: 140,
+                    end: 162
+                },
+                alternate: {
+                    start: 163,
+                    end: 167
+                },
+                transcendent: {
+                    start: 168,
+                    end: 193,
+                },
+                immortal: {
+                    start: 194,
+                    end: 204
+                },
+                limited: {
+                    start: 205,
+                    end: 212
+                },
+                eternal: {
+                    start: 213,
+                    end: 219
+                },
+                random: {
+                    start: 220,
+                    end: 230
+                },
+                another: {
+                    start: 231,
+                    end: 239
+                }
+
             }
+
+            for (var i in obj) {
+                if (id <= obj[i].end) {
+                    name = i;
+                    break;
+                }
+            }
+
+            data[name].forEach(function (el) {
+                if (el.id == id) {
+                    temp = el;
+                    return
+                }
+            })
+
             return temp
         }
 
         function getCurrentSimplestMaterial() {
             let material = {}
             data.common.forEach((el) => {
+                material[el.id] = el.unit
+            })
+            data.etc.forEach((el) => {
+                material[el.id] = el.unit
+            })
+            data.random.forEach((el) => {
                 material[el.id] = el.unit
             })
             return material;
@@ -157,7 +305,7 @@
             let count = 0;
             for (let i in data) {
                 data[i].forEach((el) => {
-                    count++
+                    count++;
                 })
             }
             return count;
@@ -167,6 +315,8 @@
         var simplest = {};
         var downstream_arr = [];
         function trackRecipe(recipe, resetList = true) {
+            let obj = {};
+            let arr = []
 
             if (resetList) {
                 simplest = {};
@@ -178,7 +328,7 @@
                 let ingredient = findId(el.id);
                 let id = ingredient.id;
                 let unit = ingredient.unit;
-                if (ingredient.hierachyLevel <= 1) {
+                if (ingredient.idType <= 1 || isUniqueSimplestMaterial(ingredient)) {
                     /* update value if id already exist - to do */
                     let keys = Object.keys(simplest);
 
@@ -191,6 +341,7 @@
                         downstream_arr.push(ingredient)
                 }
 
+                arr.push(ingredient);
             })
 
             if (downstream_arr.length) {
@@ -199,78 +350,97 @@
             }
 
             if (downstream_arr.length == 0) {
-                return simplest
+                obj.referenceRecipe = arr
+                obj.simplest = simplest
+                return obj
             }
         }
 
-        function triggerPercentageCalculation(id, prop) {
-            let upstream = getUpstreamUnit(id)
-            let complete = 0;
+        function triggerPercentageCalculation(unit, prop) {
+            let upstream = unit.upstream;
+            var complete = 0;
             upstream.forEach((e) => {
-                let unit = findId(e);
-                let insufficientList = generateInsufficentList(unit.recipe)
+                let unit = e;
+                let insufficientList = generateInsufficentList(unit)
+                let insufficientListWithRandomWisp = generateInsufficentListWithRandomWisp(insufficientList)
 
-                if (Object.keys(insufficientList).length) {
-                    let total = 0;
-                    let insufficient = 0;
+                // console.log( insufficientList )
+                // console.log( unit.simplest_material )
+
+                if (Object.keys(insufficientListWithRandomWisp).length) {
+                    var total = 0;
+                    var insufficient = 0;
                     for (let i in unit.simplest_material) {
                         total += unit.simplest_material[i]
                     }
 
-                    for (let i in insufficientList) {
-                        insufficient += insufficientList[i]
+                    for (let i in insufficientListWithRandomWisp) {
+                        insufficient += insufficientListWithRandomWisp[i]
                     }
-                    complete = 100 - Math.ceil(insufficient / total * 100);
+
+                    complete = Math.round((1 - (insufficient / total)) * 100)
                 } else {
                     complete = 100;
                 }
 
-                unit.complete = 0;
-                unit.complete = complete;
+                // console.log( insufficientList )
+                // console.log(unit.simplest_material)
+
+                if (complete == unit.complete) {
+                    callWatchers(unit, "complete", "set", complete, complete)
+                }
+                else
+                    unit.complete = complete;
 
 
-                // console.log(unit.name + "(" + hierachyLevelMapping[unit.hierachyLevel] + "):" + unit.complete + "%")
+                // console.log(unit.name + "(" + idTypeMapping[unit.idType] + "):" + unit.complete + "%")
+                // console.log(insufficient + "-" + total)
             })
         }
 
         var storeList = [];
         var insufficientList = {};
         var i = 0;
-        function generateInsufficentList(recipe, reset = true) {
+        function generateInsufficentList(char, reset = true) {
             if (reset) {
                 storeList = [];
                 insufficientList = {};
             }
-            recipe.forEach((el) => {
-                let unit = findId(el.id)
-                if (unit.unit < el.amount && unit.hierachyLevel > 1) {
+
+            let recipe = char.recipe;
+            recipe.forEach((el, index) => {
+                let unit = char.referenceRecipe[index];
+
+                if (unit.unit < el.amount && unit.idType > 1 && !isUniqueSimplestMaterial(unit)) {
                     let count = Math.abs(unit.unit - el.amount);
                     while (count--) {
                         storeList.push(unit)
                     }
                 }
 
-                if (unit.hierachyLevel <= 1) {
+                if (unit.idType <= 1 || isUniqueSimplestMaterial(unit)) {
                     let keys = Object.keys(insufficientList);
                     if (keys.includes(el.id.toString())) {
                         insufficientList[el.id.toString()] += el.amount
                     }
                     else insufficientList[el.id.toString()] = el.amount
+
                 }
+
             })
 
             if (storeList.length) {
                 let unit = storeList.shift();
-                generateInsufficentList(unit.recipe, false);
+                generateInsufficentList(unit, false);
                 return insufficientList
             }
 
 
             if (storeList.length == 0) {
-
+                let simplest_material = getCurrentSimplestMaterial();
+                // console.log(insufficientList)
+                // console.log(simplest_material)
                 for (let i in insufficientList) {
-                    let simplest_material = getCurrentSimplestMaterial();
-
                     if (simplest_material[i] >= insufficientList[i]) {
                         insufficientList[i] = 0;
 
@@ -278,71 +448,103 @@
                         insufficientList[i] -= simplest_material[i]
                     }
                 }
+
                 validateElementWithValue0(insufficientList)
                 return insufficientList;
             }
         }
 
-        function validateElementWithValue0(obj) {
-            for (let i in obj) {
-                if (obj[i] == 0) delete obj[i]
-            }
-        }
-
-        function generateSimplestMaterial() {
+        function generateData() {
             let count = getAmount()
             for (let i = 0; i < count; i++) {
                 let unit = findId(i);
-                unit.simplest_material = trackRecipe(unit.recipe)
+                let obj = trackRecipe(unit.recipe)
+                unit.simplest_material = obj.simplest
+                unit.referenceRecipe = obj.referenceRecipe
+                unit.upstream = getUpstreamUnit(unit.id)
                 unit.complete = 0;
             }
 
-            console.log("-Generate Simplest Material Successfully")
+            console.log("-Generate Simplest & Upstream Material Successfully")
+            console.log(data)
+        }
+
+        function generateInsufficentListWithRandomWisp(list) {
+            let wisp = data["common"][0];
+            let count = wisp.unit;
+            let _list = { ...list };
+
+            for (let i in list) {
+                if (count == 0) break;
+
+                if (count >= _list[i]) {
+                    count -= _list[i]
+                    _list[i] = 0
+                } else {
+                    _list[i] -= count;
+                    count = 0;
+                }
+            }
+
+            return _list;
         }
 
         function getUpstreamUnit(id) {
             let list = [];
             let unit = findId(id);
 
-            for (let i = unit.hierachyLevel + 1; i < Object.keys(hierachyLevelMapping).length; i++) {
-                // console.log(hierachyLevelMapping[i])
-                data[hierachyLevelMapping[i]].forEach((el) => {
-                    let recipe = el.recipe
-                    recipe.forEach((ele) => {
-                        if (ele.id == id) list.push(el.id)
+            if (!isUniqueSimplestMaterial(unit)) {
+                for (let i = unit.idType + 1; i < Object.keys(idTypeMapping).length; i++) {
+                    data[idTypeMapping[i]].forEach((el) => {
+                        let recipe = el.recipe
+                        recipe.forEach((ele) => {
+                            if (ele.id == id) list.push(el)
+                        })
+
                     })
 
-                })
+                }
+            } else {
+                for (let i in data) {
+                    data[i].forEach((el) => {
+                        let recipe = el.recipe
+                        recipe.forEach((ele) => {
+                            if (ele.id == id) list.push(el)
+                        })
+                    })
+                }
             }
+
             return list
         }
 
+        function isUniqueSimplestMaterial(unit) {
+            if (unit.idType == 6 || unit.idType == 13) return true;
+            return false;
+        }
+
         function addWatcher() { /* Monitor object, property "unit" in detail */
+            let j = 0;
+            var props = ["unit", "complete"];
             for (var i in data) {
                 data[i].forEach(el => {
-                    watch(el, function (prop, action, newvalue, oldvalue) {  /* prop: unit, action: set, use this to retrieve current object */
-                        var props = ["unit", "complete"];
-
-                        if (props.includes(prop)) {
-                            triggerPercentageCalculation(this.id, _prop = prop)
-
-                            if (prop == "complete") {
-                                reflectComplete(this, newvalue)
-                            }
+                    watch(el, props, function (prop, action, newvalue, oldvalue) {  /* prop: unit, action: set, use this to retrieve current object */
+                        triggerPercentageCalculation(this, _prop = prop)
+                        if (prop == "complete") {
+                            reflectComplete(this, newvalue)
                         }
                     })
                 })
             }
         }
+
         function reflectComplete(obj, val) {
             let name = obj.name;
             let temp_name = name.replace(/\ /g, "");
             temp_name = temp_name.replace(/\./g, "");
-            console.log(temp_name)
-            let type = hierachyLevelMapping[obj.hierachyLevel];
+            let type = idTypeMapping[obj.idType];
             let id = obj.id;
             let dom = "#" + type + "_" + temp_name.toLowerCase() + "_" + id;
-            console.log(dom)
 
             let progress_bar = $(dom).parents(".btns").siblings(".namewrap").find(".progress-bar");
             let label = $(dom).parents(".btns").siblings(".namewrap").find(".name");
@@ -353,30 +555,183 @@
                 progress_bar.toggleClass("bg-green")
                 $(label).html(name);
             }
-            else {
-                progress_bar.removeClass("bg-green")
+            else if (val != 0) {
                 $(label).html(val + "% " + name);
+                progress_bar.removeClass("bg-green")
+            }
+            else if (val == 0) {
+                $(label).html(name);
+                progress_bar.removeClass("bg-green")
             }
         }
 
+        function sortByAlphabet(name) {
+            let temp_data = data[name]
+            let newOrder = temp_data.sort((a, b) => a.name.localeCompare(b.name))
+            let list = $("." + name.split("_")[0])
+            let currentOrder = list.children()
 
-        $("#main").append(
-            createColumnBlock([
-                creatBlock("Common", common_unit, false),
-                creatBlock("Uncommon", uncommon_unit)
-            ])
-        );
+            let order = 0;
+            newOrder.forEach((el, index) => {
+                let u_name = el.name.toLowerCase().replace(/\ /g, "")
+                u_name = u_name.replace(/\./g, "");
+                let element = $("[attr = '" + name + "_" + u_name + "_" + el.id + "']");
 
-        $("#main").append(
-            creatBlock("Special", special_unit)
-        );
+                element.css("order", ++order)
+            })
+        }
 
-        $("#main").append(
-            creatBlock("Rare", rare_unit)
-        );
+        function sortByPercentage(name) {
+            let temp_data = data[name]
+            let newOrder = temp_data.sort((a, b) => b.complete - a.complete)
+            let list = $("." + name.split("_")[0])
+            let currentOrder = list.children()
 
+            let order = 0;
+            newOrder.forEach((el, index) => {
+                let u_name = el.name.toLowerCase().replace(/\ /g, "")
+                u_name = u_name.replace(/\./g, "");
+                let element = $("[attr = '" + name + "_" + u_name + "_" + el.id + "']");
 
-        generateSimplestMaterial()
+                element.css("order", ++order)
+            })
+        }
+
+        function validateElementWithValue0(obj) {
+            for (let i in obj) {
+                if (obj[i] == 0) delete obj[i]
+            }
+        }
+
+        function generateContent() {
+            $("#main").append(
+                createColumnBlock([
+                    creatBlock("Common", common_unit, false),
+                    creatBlock("Uncommon", uncommon_unit)
+                ])
+            );
+
+            $("#main").append(
+                creatBlock("Special", special_unit)
+            );
+
+            $("#main").append(
+                creatBlock("Rare", rare_unit)
+            );
+
+            $("#main").append(
+                creatBlock("Legend", legend_unit)
+            );
+
+            $("#main").append(
+                createColumnBlock([
+                    creatBlock("Hidden", hidden_unit),
+                    creatBlock("ETC", etc_unit, false),
+                    creatBlock("Random", random_unit)
+                ])
+            );
+
+            $("#main").append(
+                createColumnBlock([
+                    creatBlock("Transcendent", transcendent_unit),
+                    creatBlock("Alternate", alternate_unit, false)
+                ])
+            );
+
+            $("#main").append(
+                createColumnBlock([
+                    creatBlock("Immortal", immortal_unit),
+                    creatBlock("Eternal", eternal_unit),
+                    creatBlock("Limited", limited_unit),
+                    creatBlock("Another", another_unit)
+                ])
+
+            );
+        }
+
+        var Simplest_material = getCurrentSimplestMaterial();
+
+        $(document).on("click", ".btn-detail", generateModal)
+
+        $(document).on("click", ".large-icon", generateModal)
+
+        function generateModal() {
+            var id = $(this).attr("attr");
+            id = id.split("_");
+            var clone = $("#init").clone().removeAttr("id").attr("id", id[2]);
+            $(clone).modal("show");
+
+            let unit = findId(id[2]);
+
+            let title = $(clone).find("#my-modal-title").html(unit.name + " - " + idTypeMapping[unit.idType])
+
+            let recipe = $(clone).find("#recipe");
+
+            let simplest_material = $(clone).find("#simplest_material");
+
+            let insufficient_material = $(clone).find("#insufficient_material");
+
+            let top_combination = $(clone).find("#top_combination");
+
+            let div = $("<div class='d-flex justify-content-around py-2'></div>")
+
+            unit.referenceRecipe.forEach((el) => {
+                let wrap = $("<div class='d-flex flex-column align-items-center p-3'></div>");
+
+                let img = $('<img src="' + el.img + '" alt="" attr="' + idTypeMapping[el.idType] + "_" + el.name + "_" + el.id + '" class="large-icon">')
+                let name = $("<div style='font-size:10px;' class='text-center'>" + el.name + "-" + idTypeMapping[el.idType] + "</div>")
+
+                img.on('error', function (e) {
+                    this.src = el.img.replace("jpg", "png")
+                });
+
+                $(wrap).append(img, name)
+                $(div).append(wrap)
+            })
+
+            $(recipe).find(".display-info").append(div)
+
+            //------------------------------------------
+
+            div = $("<div class='d-flex justify-content-around py-2'></div>")
+
+            for (var i in unit.simplest_material) {
+                let char = findId(i)
+                let wrap = $("<div class='d-flex flex-column align-items-center p-3'></div>");
+                let img = $('<img src="' + char.img + '" alt="' + idTypeMapping[char.idType] + "_" + char.name + "_" + char.id + '" attr="" class="large-icon">')
+                let name = $("<div style='font-size:10px;' class='text-center'>" + char.name + "-" + idTypeMapping[char.idType] + " x " + unit.simplest_material[i] + "</div>")
+
+                img.on('error', function (e) {
+                    this.src = char.img.replace("jpg", "png")
+                });
+
+                $(wrap).append(img, name)
+                $(div).append(wrap)
+            }
+            $(simplest_material).find(".display-info").append(div)
+
+            var insufficient = generateInsufficentList(unit)
+
+            div = $("<div class='d-flex justify-content-around py-2'></div>")
+
+            for (var i in insufficient) {
+                let char = findId(i)
+                let wrap = $("<div class='d-flex flex-column align-items-center p-3'></div>");
+                let img = $('<img src="' + char.img + '" alt="" attr="' + idTypeMapping[char.idType] + "_" + char.name + "_" + char.id + '" class="large-icon">')
+                let name = $("<div style='font-size:10px;' class='text-center'>" + char.name + "-" + idTypeMapping[char.idType] + " x " + insufficient[i] + "</div>")
+
+                img.on('error', function (e) {
+                    this.src = char.img.replace("jpg", "png")
+                });
+
+                $(wrap).append(img, name)
+                $(div).append(wrap)
+            }
+            $(insufficient_material).find(".display-info").append(div)
+        }
+
+        generateContent()
+        generateData()
         addWatcher()
     })
 </script>
