@@ -76,8 +76,16 @@ body{
     flex-direction: column;
 }
 
-.col-1_5{
-    width: 14.2857142%;
+@media (min-width: 992px){
+    .col-1_5{
+        width: 14.2857142%;
+    }
+}
+
+@media (max-width: 600px){
+    .col-1_5{
+        width: 100%;
+    }
 }
 
 .column-block .group{

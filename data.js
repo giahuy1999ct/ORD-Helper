@@ -1289,9 +1289,9 @@ var rare_unit = [
             return rare_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 40, amount: 1 },
-            { id: 48, amount: 1 },
-            { id: 52, amount: 1 },
+            { id: 29, amount: 1 },
+            { id: 51, amount: 1 },
+            { id: 54, amount: 1 },
         ],
         note: "",
         idType: 4,
@@ -1610,9 +1610,9 @@ var legend_unit = [
             return legend_folder + this.name + ".jpg";
         },
         recipe: [
-            // { id: 71, amount: 1 },
-            // { id: 92, amount: 1 },
-            // { id: 63, amount: 1 },
+            { id: 44, amount: 1 },
+            { id: 78, amount: 1 },
+            { id: 135, amount: 1 },
         ],
         note: "",
         idType: 5,
@@ -2167,7 +2167,7 @@ var hidden_unit = [
         recipe: [
             { id: 86, amount: 1 },
             { id: 91, amount: 1 },
-            { id: 95, amount: 1 },
+            { id: 51, amount: 1 },
         ],
         note: "",
         idType: 7,
@@ -2180,10 +2180,10 @@ var hidden_unit = [
             return hidden_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 86, amount: 1 },
-            { id: 91, amount: 1 },
-            { id: 95, amount: 1 },
-            { id: 95, amount: 1 },
+            { id: 25, amount: 1 },
+            { id: 39, amount: 2 },
+            { id: 88, amount: 1 },
+            { id: 135, amount: 1 },
         ],
         note: "",
         idType: 7,
@@ -2455,7 +2455,7 @@ var alternate_unit = [
             return alternate_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 148, amount: 1 },
+            { id: 149, amount: 1 },
         ],
         note: "",
         idType: 8,
@@ -2477,7 +2477,7 @@ var transcendent_unit = [
         recipe: [
             { id: 17, amount: 1 },
             { id: 79, amount: 1 },
-            { id: 162, amount: 1 },
+            { id: 164, amount: 1 },
             { id: 163, amount: 1 },
             { id: 142, amount: 1 },
             { id: 137, amount: 1 },
@@ -2866,7 +2866,7 @@ var transcendent_unit = [
             { id: 33, amount: 1 },
             { id: 38, amount: 1 },
             { id: 90, amount: 1 },
-            { id: 135, amount: 1 },
+            { id: 111, amount: 1 },
             { id: 100, amount: 1 },
         ],
         note: "",
