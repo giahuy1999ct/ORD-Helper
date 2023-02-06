@@ -75,14 +75,18 @@
         function creatBlock(name, item, isFusionable = true) {
             var main = $("#main");
             var group = $("<div class='group col-1_5 p-2 shadow-lg'></div>");
-            var groupname = $("<div class='p-1 bg-white groupname text-center border rounded-top'>" + name + "</div>");
+            var groupname = $("<div class='p-1 bg-white groupname border rounded-top'><div class='type text-center' attr='" + name.toLowerCase() + "' >" + name + "</div></div>");
 
             let sort_alphabet = $('<img src="./img/sortByAlphabet.png" alt="" class="sort sort-alphabet" attr="' + name.toLowerCase() + '">')
             let sort_percentage = $('<img src="./img/sortByPercentage3.png" alt="" class="sort sort-percentage" attr="' + name.toLowerCase() + '">')
-            let sort_btn = $("<div class='d-flex sort-btn'></div>");
-            $(sort_btn).append(sort_percentage, sort_alphabet)
+            let left_btn = $("<div class='d-flex left-btn'></div>");
+            $(left_btn).append(sort_percentage, sort_alphabet)
 
-            if (name != "Common") groupname.append(sort_btn)
+            let right_btn = $("<div class='d-flex right-btn'></div>");
+            let reset_btn = $('<img src="./img/reset1.png" class="reset" alt="" attr="' + name.toLowerCase() + '">');
+            $(right_btn).append(reset_btn)
+
+            if (name != "Common") groupname.append(left_btn, right_btn)
 
             var itemlist = $("<div class='p-1 bg-white itemlist border rounded-bottom " + name.toLowerCase() + "'></div>");
 
@@ -158,6 +162,24 @@
             })
             return columnBlock;
         }
+
+        $(document).on("click", ".reset", function () {
+            let type = $(this).attr("attr");
+            let items = $("." + type).find(".item");
+
+            for (var i = 0; i < items.length; i++) {
+                let count = $(items[i]).find(".count")
+                if (count.val() != 0) {
+                    count.val(0)
+                    $(count).trigger("change")
+                }
+            }
+        })
+
+        $(document).on("click", ".type", function () {
+            let type = $(this).attr("attr");
+            $("." + type).toggleClass("d-none")
+        })
 
         $(document).on("click", ".namewrap", function () {
             let input = $(this).siblings('.btns').children("input");
@@ -709,6 +731,8 @@
             }
             $(simplest_material).find(".display-info").append(div)
 
+            //-------------------------------------------------------
+
             var insufficient = generateInsufficentList(unit)
 
             div = $("<div class='d-flex justify-content-around py-2'></div>")
@@ -727,6 +751,26 @@
                 $(div).append(wrap)
             }
             $(insufficient_material).find(".display-info").append(div)
+
+            //---------------------------------------------------------
+
+
+            let upstream = unit.upstream;
+            div = $("<div class='d-flex justify-content-around py-2'></div>")
+
+            upstream.forEach((el, i) => {
+                let wrap = $("<div class='d-flex flex-column align-items-center p-3'></div>");
+
+                let img = $('<img src="' + el.img + '" alt="" attr="' + idTypeMapping[el.idType] + "_" + el.name + "_" + el.id + '" class="large-icon">')
+                let name = $("<div style='font-size:10px;' class='text-center'>" + el.name + "-" + idTypeMapping[el.idType] +"</div>")
+                img.on('error', function (e) {
+                    this.src = el.img.replace("jpg", "png")
+                });
+
+                $(wrap).append(img, name)
+                $(div).append(wrap)
+            })
+            $(top_combination).find(".display-info").append(div)
         }
 
         generateContent()

@@ -3468,7 +3468,7 @@ var another_unit = [
             return another_folfer + this.name + ".jpg";
         },
         recipe: [
-            {id: 61, amount: 1},
+            {id: 31, amount: 1},
             {id: 223, amount: 1},
             {id: 109, amount: 1},
             {id: 133, amount: 1},

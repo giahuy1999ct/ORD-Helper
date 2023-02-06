@@ -47,6 +47,15 @@ textarea:focus, input:focus{
     width: 90px;
 }
 
+.type{
+    width: fit-content;
+    margin: 0 auto;
+}
+
+.type:hover{
+    cursor: pointer;
+}
+
 .namewrap{
     width: 100%;
     border-radius: 0.25rem;
@@ -102,7 +111,7 @@ body{
     background-color: #6ddb6d!important;
 }
 
-.sort{
+.sort, .reset{
     width: 20px;
     height: 15px;
     cursor: pointer;
@@ -110,7 +119,7 @@ body{
     border: 1px solid white;
 }
 
-.sort:hover{
+.sort:hover, .reset:hover{
     width: 25px;
     height: 20px;
 }
@@ -119,15 +128,26 @@ body{
     position: relative;
 }
 
-.sort-btn{
+.left-btn{
     position: absolute;
     left: 1%;
+    top: 10%;
+}
+
+.right-btn {
+    position: absolute;
+    right: 1%;
     top: 10%;
 }
 
 .modal-body div{
     /* z-index: 3; */
     font-size: 18px;
+}
+
+.modal-content{
+    height: 600px;
+    overflow: auto;
 }
 
 .large-icon{
