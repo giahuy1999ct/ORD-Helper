@@ -193,8 +193,8 @@ var uncommon_unit = [
             return uncommon_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 1, amount: 1 },
             { id: 6, amount: 1 },
+            { id: 1, amount: 1 },
         ],
         idType: 2,
 
@@ -233,8 +233,8 @@ var uncommon_unit = [
             return uncommon_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 2, amount: 1 },
             { id: 5, amount: 1 },
+            { id: 2, amount: 1 },
         ],
         idType: 2,
     },
@@ -270,8 +270,8 @@ var uncommon_unit = [
             return uncommon_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 8, amount: 1 },
             { id: 9, amount: 1 },
+            { id: 8, amount: 1 },
         ],
         idType: 2,
     },
@@ -283,8 +283,8 @@ var uncommon_unit = [
             return uncommon_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 3, amount: 1 },
             { id: 7, amount: 1 },
+            { id: 3, amount: 1 },
         ],
         idType: 2,
     },
@@ -309,8 +309,8 @@ var uncommon_unit = [
             return uncommon_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 3, amount: 1 },
             { id: 8, amount: 1 },
+            { id: 3, amount: 1 },
         ],
         idType: 2,
     }
@@ -356,8 +356,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 13, amount: 1 },
             { id: 17, amount: 1 },
+            { id: 13, amount: 1 },
             { id: 5, amount: 1 }
         ],
         idType: 3,
@@ -370,8 +370,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 5, amount: 1 },
             { id: 14, amount: 2 },
+            { id: 5, amount: 1 },
         ],
         idType: 3,
     },
@@ -408,8 +408,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 7, amount: 1 },
             { id: 13, amount: 1 },
+            { id: 7, amount: 1 },
             { id: 19, amount: 1 }
         ],
         idType: 3,
@@ -422,8 +422,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 1, amount: 1 },
             { id: 11, amount: 1 },
+            { id: 1, amount: 1 },
             { id: 12, amount: 1 }
         ],
         idType: 3,
@@ -448,8 +448,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 5, amount: 1 },
             { id: 10, amount: 1 },
+            { id: 5, amount: 1 },
             { id: 15, amount: 1 }
         ],
         idType: 3,
@@ -462,9 +462,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 20, amount: 1 },
             { id: 4, amount: 1 },
             { id: 10, amount: 1 },
-            { id: 20, amount: 1 }
         ],
         idType: 3,
     },
@@ -476,9 +476,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 16, amount: 1 },
             { id: 3, amount: 1 },
             { id: 12, amount: 1 },
-            { id: 16, amount: 1 }
         ],
         idType: 3,
     },
@@ -516,8 +516,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 3, amount: 1 },
             { id: 18, amount: 1 },
+            { id: 3, amount: 1 },
             { id: 21, amount: 1 }
         ],
         idType: 3,
@@ -530,8 +530,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 22, amount: 2 },
             { id: 1, amount: 1 },
-            { id: 22, amount: 2 }
         ],
         idType: 3,
     },
@@ -543,8 +543,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 139, amount: 3 },
             { id: 3, amount: 1 },
-            { id: 139, amount: 3 }
         ],
         idType: 3,
     },
@@ -556,8 +556,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 15, amount: 2 },
             { id: 4, amount: 1 },
-            { id: 15, amount: 2 }
         ],
         idType: 3,
     },
@@ -605,9 +605,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 15, amount: 1 },
             { id: 7, amount: 1 },
             { id: 11, amount: 1 },
-            { id: 15, amount: 1 }
         ],
         idType: 3,
     },
@@ -619,8 +619,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 6, amount: 1 },
             { id: 10, amount: 1 },
+            { id: 6, amount: 1 },
             { id: 11, amount: 1 }
         ],
         idType: 3,
@@ -633,9 +633,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 18, amount: 1 },
             { id: 7, amount: 1 },
             { id: 12, amount: 1 },
-            { id: 18, amount: 1 }
         ],
         idType: 3,
     },
@@ -647,9 +647,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 18, amount: 1 },
             { id: 9, amount: 1 },
             { id: 16, amount: 1 },
-            { id: 18, amount: 1 }
         ],
         idType: 3,
     },
@@ -661,9 +661,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 22, amount: 1 }
             { id: 2, amount: 1 },
             { id: 9, amount: 1 },
-            { id: 22, amount: 1 }
         ],
         idType: 3,
     },
@@ -675,8 +675,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 2, amount: 1 },
             { id: 13, amount: 1 },
+            { id: 2, amount: 1 },
             { id: 21, amount: 1 }
         ],
         idType: 3,
@@ -689,9 +689,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 21, amount: 1 },
             { id: 7, amount: 1 },
             { id: 17, amount: 1 },
-            { id: 21, amount: 1 }
         ],
         idType: 3,
     },
@@ -703,9 +703,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 20, amount: 1 },
             { id: 7, amount: 1 },
             { id: 13, amount: 1 },
-            { id: 20, amount: 1 }
         ],
         idType: 3,
     },
@@ -717,9 +717,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 19, amount: 1 },
             { id: 7, amount: 1 },
             { id: 14, amount: 1 },
-            { id: 19, amount: 1 }
         ],
         idType: 3,
     },
@@ -731,8 +731,8 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 2, amount: 1 },
             { id: 21, amount: 2 }
+            { id: 2, amount: 1 },
         ],
         idType: 3,
     },
@@ -744,9 +744,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 14, amount: 1 },
             { id: 2, amount: 1 },
             { id: 5, amount: 1 },
-            { id: 14, amount: 1 }
         ],
         idType: 3,
     },
@@ -758,9 +758,9 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
+            { id: 19, amount: 1 },
             { id: 6, amount: 1 },
             { id: 11, amount: 1 },
-            { id: 19, amount: 1 }
         ],
         idType: 3,
     },
