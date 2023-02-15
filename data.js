@@ -661,7 +661,7 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 22, amount: 1 }
+            { id: 22, amount: 1 },
             { id: 2, amount: 1 },
             { id: 9, amount: 1 },
         ],
@@ -731,7 +731,7 @@ var special_unit = [
             return special_folder + this.name + ".jpg";
         },
         recipe: [
-            { id: 21, amount: 2 }
+            { id: 21, amount: 2 },
             { id: 2, amount: 1 },
         ],
         idType: 3,
